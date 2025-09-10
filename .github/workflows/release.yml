@@ -27,6 +27,13 @@ jobs:
       INSTALL_DIR: ${{ github.workspace }}/install
 
     steps:
+      - name: Install Qt6 dependencies (ARM only)
+        if: matrix.arch == 'arm64'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qt6-base-dev
+          echo "Qt6_DIR=/usr/lib/aarch64-linux-gnu/cmake/Qt6" >> $GITHUB_ENV
+
       - name: Resolve tag
         id: meta
         shell: bash
